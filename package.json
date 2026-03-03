@@ -1,0 +1,26 @@
+{
+  "name": "bitespeed-assignment",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+        "dev": "tsx watch src/server.ts",
+        "build": "prisma generate && tsc",
+        "start": "node dist/server.js",
+        "lint": "tsc --noEmit"
+    },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.3.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}
