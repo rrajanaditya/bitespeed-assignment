@@ -19,14 +19,7 @@ export class ContactService {
                 },
             });
 
-            return {
-                contact: {
-                    primaryContactId: newContact.id,
-                    emails: [newContact.email],
-                    phoneNumbers: [newContact.phoneNumber],
-                    secondaryContactIds: [],
-                },
-            };
+            return this.formatResponse(newContact, []);
         }
 
         const primaryIds = new Set<number>();
@@ -77,13 +70,18 @@ export class ContactService {
             relatedContacts.push(newSecondary);
         }
 
-        const emails = Array.from(new Set([primaryContact.email, ...relatedContacts.map((c) => c.email)])).filter(Boolean) as string[];
-        const phoneNumbers = Array.from(new Set([primaryContact.phoneNumber, ...relatedContacts.map((c) => c.phoneNumber)])).filter(Boolean) as string[];
-        const secondaryContactIds = relatedContacts.filter((c) => c.id !== primaryContact.id).map((c) => c.id);
+      
+        return this.formatResponse(primaryContact, relatedContacts);
+    }
+
+    private formatResponse(primary: Contact, all: Contact[]) {
+        const emails = Array.from(new Set([primary.email, ...all.map((c) => c.email)])).filter(Boolean) as string[];
+        const phoneNumbers = Array.from(new Set([primary.phoneNumber, ...all.map((c) => c.phoneNumber)])).filter(Boolean) as string[];
+        const secondaryContactIds = all.filter((c) => c.id !== primary.id).map((c) => c.id);
 
         return {
             contact: {
-                primaryContactId: primaryContact.id,
+                primaryContatctId: primary.id,
                 emails,
                 phoneNumbers,
                 secondaryContactIds,
